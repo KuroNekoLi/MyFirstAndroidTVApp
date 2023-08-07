@@ -4,13 +4,17 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.leanback.app.RowsSupportFragment
+import androidx.viewpager.widget.ViewPager
 import com.cindy.myfirstandroidtvapp.Model.Data
 import com.cindy.myfirstandroidtvapp.Model.MovieList
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_top_tab_navigation.*
 
 class TopTabNavigationActivity : FragmentActivity() {
-
+    companion object {
+        var viewPagerInstance: ViewPager? = null
+    }
     private val TAG: String = javaClass.simpleName
     private var mMovieList: MovieList? = null
     private var mMovieListData: List<Data>? = null
@@ -22,6 +26,22 @@ class TopTabNavigationActivity : FragmentActivity() {
 
         processData()
         processView()
+
+        // 初始化ViewPager的静态引用
+        viewPagerInstance = view_pager
+
+        view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+
+            override fun onPageSelected(position: Int) {
+                // 当页面被选中时，通知Fragment
+                val fragment = mViewPagerAdapter?.instantiateItem(view_pager, position) as? RowsSupportFragment
+
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {}
+        })
+
 
     }
 
@@ -46,7 +66,5 @@ class TopTabNavigationActivity : FragmentActivity() {
             view_pager.adapter = mViewPagerAdapter
         }
         tab_layout.setupWithViewPager(view_pager)
-
     }
-
 }

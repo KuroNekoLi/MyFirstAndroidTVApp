@@ -16,15 +16,7 @@ class MainActivity : Activity() {
     }
 
     fun processListener(){
-        vBrowseSupportFragment.setOnClickListener(object: View.OnClickListener{
-            override fun onClick(view: View?) {
 
-                val intent: Intent = Intent()
-                intent.setClass(this@MainActivity, BrowseSupportFragmentActivity::class.java)
-                startActivity(intent)
-
-            }
-        })
         vTopTabNavigation.setOnClickListener(object: View.OnClickListener{
             override fun onClick(view: View?) {
 
@@ -35,5 +27,4 @@ class MainActivity : Activity() {
             }
         })
     }
-
 }
